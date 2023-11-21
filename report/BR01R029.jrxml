@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BF01R0029" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ffd84165-eee5-4a4c-889a-7fb0c0510697">
-	<property name="ireport.zoom" value="2.143588810000083"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
@@ -16,7 +16,7 @@
 	</parameter>
 	<parameter name="Item" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,ITEM_GROUP,INFO_DISE,DISE_NAME,SUM(INFO_QTY) AS INFO_QTY
+		<![CDATA[SELECT INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,ITEM_GROUP,INFO_DISE,DISE_NAME,COALESCE(SUM(INFO_QTY),NULL) AS INFO_QTY,SUBSTR(INFO_DATE,4,2)|| '/' || SUBSTR(INFO_DATE,7,4) AS MONTH
 FROM FAR_MINFORM,FAR_MDISEASE,FAR_MHOUSE,FAR_MITEM
 WHERE INFO_FARM = $P{Farm}
 AND INFO_BREED = $P{Breed}
@@ -29,7 +29,8 @@ AND HOUS_CODE = INFO_HOUSE
 AND INFO_ITEM = ITEM_CODE
 AND HOUS_CODE BETWEEN $P{StartHouse} AND $P{EndHouse}
 AND SUBSTR(INFO_DATE,7) || SUBSTR(INFO_DATE,4,2) || SUBSTR(INFO_DATE,1,2) BETWEEN $P{StartDate} AND $P{EndDate}
-GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
+GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME
+ORDER BY INFO_HOUSE,INFO_DATE,INFO_ITEM,INFO_DISE]]>
 	</queryString>
 	<field name="INFO_DATE" class="java.lang.Object"/>
 	<field name="INFO_HOUSE" class="java.lang.Object"/>
@@ -39,6 +40,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 	<field name="INFO_DISE" class="java.lang.Object"/>
 	<field name="DISE_NAME" class="java.lang.Object"/>
 	<field name="INFO_QTY" class="java.lang.Object"/>
+	<field name="MONTH" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -110,7 +112,41 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 		<band height="35">
 			<crosstab>
 				<reportElement x="0" y="0" width="802" height="35" uuid="5db933da-1a06-4b78-b9d6-a11a50e1f19a"/>
-				<rowGroup name="INFO_HOUSE" width="33" totalPosition="End">
+				<rowGroup name="MONTH" width="29" totalPosition="End">
+					<bucket class="java.lang.Object">
+						<bucketExpression><![CDATA[$F{MONTH}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Transparent">
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" isPrintRepeatedValues="false" x="0" y="0" width="29" height="25" uuid="c18989c6-c6a3-4823-a75c-220712bf7c16"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="TH SarabunPSK" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""+$V{MONTH}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="104" height="25" uuid="88816500-55f0-4227-822a-db3562d94159"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="TH SarabunPSK" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Grand Total :]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="INFO_HOUSE" width="30" totalPosition="End">
 					<bucket class="java.lang.Object">
 						<bucketExpression><![CDATA[$F{INFO_HOUSE}]]></bucketExpression>
 					</bucket>
@@ -120,7 +156,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="33" height="25" uuid="14a6faf7-6554-4992-bf29-d1d04933f22d"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="30" height="25" uuid="14a6faf7-6554-4992-bf29-d1d04933f22d"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="TH SarabunPSK" isBold="true"/>
 								</textElement>
@@ -134,7 +170,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="85" height="25" forecolor="#FFFFFF" uuid="bb9f98dc-d485-4d82-8005-c705b2d891b7"/>
+								<reportElement x="0" y="0" width="75" height="25" uuid="58be16ee-9810-4279-94da-89faf0831867"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="TH SarabunPSK" isBold="true"/>
 								</textElement>
@@ -143,7 +179,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<rowGroup name="INFO_DATE" width="52" totalPosition="End">
+				<rowGroup name="INFO_DATE" width="45" totalPosition="End">
 					<bucket class="java.lang.Object">
 						<bucketExpression><![CDATA[$F{INFO_DATE}]]></bucketExpression>
 					</bucket>
@@ -153,7 +189,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="52" height="25" uuid="96394ea1-ae5f-4d8d-ab59-67099686dd68"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="45" height="25" uuid="96394ea1-ae5f-4d8d-ab59-67099686dd68"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="TH SarabunPSK" isBold="true"/>
 								</textElement>
@@ -167,7 +203,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="52" height="25" uuid="2ffb6d28-7423-451e-b3aa-e09c1962de7c"/>
+								<reportElement x="0" y="0" width="45" height="25" uuid="2ffb6d28-7423-451e-b3aa-e09c1962de7c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="TH SarabunPSK" isBold="true"/>
 								</textElement>
@@ -297,24 +333,12 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField pattern="#,##0.00" isBlankWhenNull="true">
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="712d3639-d972-4926-b940-01e4d12ee947"/>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="712d3639-d972-4926-b940-01e4d12ee947">
+								<printWhenExpression><![CDATA[$V{INFO_QTYMeasure} != 0]]></printWhenExpression>
+							</reportElement>
 							<textElement verticalAlignment="Middle">
 								<font fontName="TH SarabunPSK"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{INFO_QTYMeasure}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="50" height="25" rowTotalGroup="INFO_HOUSE">
-					<cellContents backcolor="#005FB3" mode="Opaque">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="14cb40ac-8755-4534-8367-90ca833737db"/>
-							<textElement verticalAlignment="Middle">
-								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{INFO_QTYMeasure}]]></textFieldExpression>
 						</textField>
@@ -325,7 +349,7 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="9d295cf4-ea93-45d5-b4fc-29e49c280296"/>
 							<textElement verticalAlignment="Middle">
 								<font fontName="TH SarabunPSK"/>
@@ -334,44 +358,12 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell rowTotalGroup="INFO_HOUSE" columnTotalGroup="INFO_ITEM">
-					<cellContents backcolor="#005FB3" mode="Opaque">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="9dc9bbd1-6db9-43af-b159-cd12631b98a8"/>
-							<textElement verticalAlignment="Middle">
-								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{INFO_QTYMeasure}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="58" columnTotalGroup="INFO_DISE">
-					<cellContents backcolor="#BFE1FF" mode="Opaque">
-						<box>
-							<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<topPen lineWidth="0.0"/>
-							<leftPen lineWidth="0.0"/>
-							<bottomPen lineWidth="0.0"/>
-							<rightPen lineWidth="0.0"/>
-						</box>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="58" rowTotalGroup="INFO_HOUSE" columnTotalGroup="INFO_DISE">
-					<cellContents backcolor="#005FB3" mode="Opaque">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-					</cellContents>
-				</crosstabCell>
 				<crosstabCell width="50" height="25" rowTotalGroup="INFO_DATE">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="8c1967d0-0b05-421f-ad9a-a4777cb69787"/>
 							<textElement verticalAlignment="Middle">
 								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
@@ -380,12 +372,12 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell rowTotalGroup="INFO_DATE" columnTotalGroup="INFO_ITEM">
+				<crosstabCell width="50" height="25" rowTotalGroup="INFO_DATE" columnTotalGroup="INFO_ITEM">
 					<cellContents backcolor="#005FB3" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="418246ec-e792-434f-84aa-ca59acd935fb"/>
 							<textElement verticalAlignment="Middle">
 								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
@@ -394,30 +386,33 @@ GROUP BY INFO_DATE,INFO_HOUSE,HOUS_NAME,INFO_ITEM,INFO_DISE,DISE_NAME]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="58" rowTotalGroup="INFO_DATE" columnTotalGroup="INFO_DISE">
-					<cellContents backcolor="#BFE1FF" mode="Opaque">
+				<crosstabCell width="50" height="25" rowTotalGroup="INFO_HOUSE">
+					<cellContents backcolor="#005FB3" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="14cb40ac-8755-4534-8367-90ca833737db"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{INFO_QTYMeasure}]]></textFieldExpression>
+						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="0" columnTotalGroup="DISE_NAME">
-					<cellContents/>
-				</crosstabCell>
-				<crosstabCell width="0" rowTotalGroup="INFO_HOUSE" columnTotalGroup="DISE_NAME">
-					<cellContents/>
-				</crosstabCell>
-				<crosstabCell width="0" rowTotalGroup="INFO_DATE" columnTotalGroup="DISE_NAME">
-					<cellContents/>
-				</crosstabCell>
-				<crosstabCell columnTotalGroup="ITEM_GROUP">
-					<cellContents/>
-				</crosstabCell>
-				<crosstabCell rowTotalGroup="INFO_HOUSE" columnTotalGroup="ITEM_GROUP">
-					<cellContents/>
-				</crosstabCell>
-				<crosstabCell rowTotalGroup="INFO_DATE" columnTotalGroup="ITEM_GROUP">
-					<cellContents/>
+				<crosstabCell width="50" height="25" rowTotalGroup="INFO_HOUSE" columnTotalGroup="INFO_ITEM">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="9dc9bbd1-6db9-43af-b159-cd12631b98a8"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{INFO_QTYMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
 				</crosstabCell>
 			</crosstab>
 		</band>

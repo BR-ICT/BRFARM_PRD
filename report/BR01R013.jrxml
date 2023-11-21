@@ -155,7 +155,7 @@ GROUP BY TRAN_HOUSE,TRAN_TYPE,TYPE_PROPERTY,TRAN_ITEM,ITEM_NAME]]>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="TRAN_ITEM" height="12" totalPosition="End">
+				<columnGroup name="TRAN_ITEM" height="12" totalPosition="End" headerPosition="Center">
 					<bucket class="java.lang.Object">
 						<bucketExpression><![CDATA[$F{TRAN_ITEM}]]></bucketExpression>
 					</bucket>
@@ -179,7 +179,7 @@ GROUP BY TRAN_HOUSE,TRAN_TYPE,TYPE_PROPERTY,TRAN_ITEM,ITEM_NAME]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="24" forecolor="#FFFFFF" uuid="dda837eb-70a9-406e-9064-b0b3917a742d"/>
+								<reportElement x="0" y="0" width="50" height="36" forecolor="#FFFFFF" uuid="dda837eb-70a9-406e-9064-b0b3917a742d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="TH SarabunPSK" size="10" isBold="true"/>
 								</textElement>
@@ -188,7 +188,48 @@ GROUP BY TRAN_HOUSE,TRAN_TYPE,TYPE_PROPERTY,TRAN_ITEM,ITEM_NAME]]>
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<columnGroup name="TRAN_TYPE" height="12" totalPosition="End">
+				<columnGroup name="ITEM_NAME" height="12" totalPosition="End" headerPosition="Center">
+					<bucket class="java.lang.Object">
+						<bucketExpression><![CDATA[$F{ITEM_NAME}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="12" uuid="e5bd881e-d208-4884-9eaa-f6ed941e2615"/>
+								<box>
+									<pen lineWidth="0.0"/>
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textElement>
+									<font fontName="TH SarabunPSK" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""+$V{ITEM_NAME}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="TRAN_TYPE" height="12" totalPosition="End" headerPosition="Center">
 					<bucket class="java.lang.Object">
 						<bucketExpression><![CDATA[$F{TRAN_TYPE}]]></bucketExpression>
 					</bucket>
@@ -286,6 +327,12 @@ GROUP BY TRAN_HOUSE,TRAN_TYPE,TYPE_PROPERTY,TRAN_ITEM,ITEM_NAME]]>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" columnTotalGroup="ITEM_NAME">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell width="0" rowTotalGroup="TRAN_HOUSE" columnTotalGroup="ITEM_NAME">
+					<cellContents/>
 				</crosstabCell>
 			</crosstab>
 		</band>

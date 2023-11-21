@@ -322,42 +322,42 @@ WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{TRAN_DATE}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="59" y="0" width="62" height="13" uuid="4ca1a8c7-5564-4a10-b5c6-dd47facf287e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{BAL_PSF}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="125" y="0" width="77" height="13" uuid="30077c87-9452-45de-acec-9211d75769c8"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{HCG}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="204" y="0" width="88" height="13" uuid="162c96a9-7a6f-4c15-bd8e-e82904a40b75"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{HCD}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="294" y="0" width="84" height="13" uuid="a49a8d23-bce4-48b8-b697-6f56d461ffff"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{HCS}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="379" y="0" width="90" height="13" uuid="938f20d4-902c-4e4a-96de-60a2843e8bf9"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{HCC}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="470" y="0" width="83" height="13" uuid="007a555a-c2a1-4e6f-bc4f-c334f37ef839"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK"/>
@@ -399,35 +399,35 @@ WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2
 			<line>
 				<reportElement x="122" y="0" width="1" height="15" uuid="aba1f680-6823-4c13-8e4c-02124e778067"/>
 			</line>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="125" y="0" width="77" height="14" uuid="72371b80-a7f9-4fc2-9bae-1d890a000ca2"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{GTOTAL_HCG}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="204" y="0" width="88" height="14" uuid="002b838c-f27c-43f6-9c79-101871e948b0"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{GTOTAL_HCD}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="294" y="0" width="83" height="14" uuid="c6cc3740-3615-47e1-8982-daa7beec94de"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{GTOTAL_HCS}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="380" y="0" width="89" height="14" uuid="13a91285-3890-4f64-a163-c1a523c1b037"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{GTOTAL_HCC}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="471" y="0" width="82" height="14" uuid="7f047d8d-c1c7-4fee-a554-11d8840b5fd3"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" isBold="true" isUnderline="true"/>

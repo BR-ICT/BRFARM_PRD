@@ -5,10 +5,13 @@ set GITHUB_USERNAME=publicforbr
 set GITHUB_TOKEN=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
 
 REM Set the repository URL
-set REPO_URL=https://github.com/BR-ICT/BRFARM_PRD.git
+set REPO_URL=github.com/BR-ICT/BRFARM_PRD.git develop
 
 REM Set the path to your local repository
-set LOCAL_REPO_PATH=D:\BRFARM_PRD
+set LOCAL_REPO_PATH=D:\BRFARM
+
+REM Set the branch you want to pull
+set BRANCH_NAME=your_branch_name
 
 REM Change directory to the local repository
 cd %LOCAL_REPO_PATH%
