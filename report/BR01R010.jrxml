@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 5.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BF01R010" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b0d4fdc1-84dd-474d-9121-c171b2697a57">
 	<property name="ireport.zoom" value="2.143588810000066"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="114"/>
 	<parameter name="Farm" class="java.lang.String"/>
 	<parameter name="Breed" class="java.lang.String"/>
 	<parameter name="StartDate" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Round" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DESC_DATE,DESC_FARM,FARM_NAME,CERT_CODE,DESC_HCCBW,DESC_HCCAW,DESC_HCD,DESC_HCS,DESC_HCDT,DESC_HCTTL,DESC_HCDTPLACE,DESC_TEMPR,
 DESC_TEMPWT,DESC_TIMEW,DESC_PHWT,DESC_CONC,DESC_TEMPCS,DESC_TTRUCKB,DESC_TTRUCKBHC,DESC_WEATHER,DESC_GIVEN,DESC_RECEIVE,DESC_APPROVE,
@@ -24,12 +24,12 @@ AND DESC_DATE = $P{StartDate}]]>
 	<field name="DESC_FARM" class="java.lang.Object"/>
 	<field name="FARM_NAME" class="java.lang.Object"/>
 	<field name="CERT_CODE" class="java.lang.Object"/>
-	<field name="DESC_HCCBW" class="java.lang.Integer"/>
-	<field name="DESC_HCCAW" class="java.lang.Integer"/>
-	<field name="DESC_HCD" class="java.lang.Integer"/>
-	<field name="DESC_HCS" class="java.lang.Integer"/>
-	<field name="DESC_HCDT" class="java.lang.Integer"/>
-	<field name="DESC_HCTTL" class="java.lang.Integer"/>
+	<field name="DESC_HCCBW" class="java.lang.Object"/>
+	<field name="DESC_HCCAW" class="java.lang.Object"/>
+	<field name="DESC_HCD" class="java.lang.Object"/>
+	<field name="DESC_HCS" class="java.lang.Object"/>
+	<field name="DESC_HCDT" class="java.lang.Object"/>
+	<field name="DESC_HCTTL" class="java.lang.Object"/>
 	<field name="DESC_HCDTPLACE" class="java.lang.Object"/>
 	<field name="DESC_TEMPR" class="java.lang.Object"/>
 	<field name="DESC_TEMPWT" class="java.lang.Object"/>
@@ -120,7 +120,7 @@ AND DESC_DATE = $P{StartDate}]]>
 				<text><![CDATA[FO-PS03-004]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="195" y="45" width="38" height="14" uuid="66b45918-8ab9-4fd4-b25c-f936c47845e2"/>
+				<reportElement x="219" y="47" width="38" height="14" uuid="66b45918-8ab9-4fd4-b25c-f936c47845e2"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 				</textElement>
@@ -148,7 +148,7 @@ AND DESC_DATE = $P{StartDate}]]>
 				<textFieldExpression><![CDATA[""+$F{DESC_FARM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="235" y="45" width="100" height="14" uuid="ee4bcbe2-3b21-4f37-aa48-a3cf7f1ef73a"/>
+				<reportElement x="259" y="47" width="100" height="14" uuid="ee4bcbe2-3b21-4f37-aa48-a3cf7f1ef73a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
@@ -181,20 +181,6 @@ AND DESC_DATE = $P{StartDate}]]>
 					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Breed}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="317" y="45" width="31" height="14" uuid="d1c26bd3-ce76-4909-8732-04e405b42858"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Round :]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="348" y="45" width="100" height="14" uuid="c9117da6-bd30-4076-8b06-2b4766278d8f"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{Round}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -721,11 +707,11 @@ AND DESC_DATE = $P{StartDate}]]>
 				<reportElement x="76" y="291" width="1" height="301" uuid="4b9568bc-5813-4a4f-a948-481c0ea7fa38"/>
 			</line>
 			<staticText>
-				<reportElement x="2" y="590" width="61" height="10" uuid="bda8e0e8-4ca9-458d-84f1-aa73dd6608bc"/>
+				<reportElement x="2" y="590" width="88" height="10" uuid="bda8e0e8-4ca9-458d-84f1-aa73dd6608bc"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Issue : 2 / 25 Mar 2009]]></text>
+				<text><![CDATA[Issue:1/31 Jul 2017]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="570" width="112" height="1" uuid="15c4651e-1410-4f44-ade1-df9d53099816"/>

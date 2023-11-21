@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BF01R003" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ffd84165-eee5-4a4c-889a-7fb0c0510697">
 	<property name="ireport.zoom" value="2.143588810000066"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="286"/>
 	<property name="ireport.y" value="0"/>
 	<style name="AltBackgrd">
 		<conditionalStyle>
@@ -89,8 +89,8 @@ GROUP BY TRAN_DATE) AS b
 ON a.TRAN_DATE = b.TRAN_DATE
 LEFT JOIN
 (SELECT INVE_DATE,
-SUM(CASE WHEN ITEM_GROUP = 'GPF' THEN INVE_BALANCE ELSE 0 END ) AS SM_PCF2,
-SUM(CASE WHEN ITEM_GROUP = 'GPM' THEN INVE_BALANCE ELSE 0 END ) AS SM_PCF1
+SUM(CASE WHEN ITEM_GROUP = $P{FGroup} THEN INVE_BALANCE ELSE 0 END ) AS SM_PCF2,
+SUM(CASE WHEN ITEM_GROUP = $P{MGroup} THEN INVE_BALANCE ELSE 0 END ) AS SM_PCF1
 FROM FAR_DINVENBAL,FAR_MITEM
 WHERE INVE_FARM = $P{Farm}
 AND INVE_BREED IN ($P{Breed},$P{BreedAll})
@@ -99,11 +99,12 @@ AND INVE_ITEM = ITEM_CODE
 GROUP BY INVE_DATE) AS c
 ON a.TRAN_DATE = c.INVE_DATE
 LEFT JOIN
-(SELECT INFO_DATE,CASE WHEN INFO_ITEM IN ($P{HCG2001},$P{HCG3001}) AND INFO_DISE = 'W01' THEN INFO_QTY ELSE 0 END AS W_HCG
+(SELECT INFO_DATE,SUM(CASE WHEN INFO_ITEM IN ($P{HCG2001},$P{HCG3001}) AND INFO_DISE = 'W01' THEN INFO_QTY ELSE 0 END) AS W_HCG
 FROM FAR_MINFORM
 WHERE INFO_FARM = $P{Farm}
 AND INFO_BREED = $P{Breed}
-AND INFO_HOUSE = $P{House}) AS d
+AND INFO_HOUSE = $P{House}
+GROUP BY INFO_DATE) AS d
 ON a.TRAN_DATE = d.INFO_DATE
 LEFT JOIN
 (SELECT INFO_DATE,SUM(CASE WHEN INFO_ITEM IN ($P{HCC2004},$P{HCC3004}) AND INFO_DISE = 'H01' THEN INFO_QTY ELSE 0 END) AS SM_HC01,
@@ -134,8 +135,8 @@ AND FLOC_BREED = PSGR_BREED
 AND FLOC_CODE = PSGR_FLOCK)
 ON HOUS_CODE = PSGR_HOUSE) AS f
 LEFT JOIN
-(SELECT INVE_DATE,CASE WHEN ITEM_GROUP = $P{FGroup} THEN INVE_BALANCE ELSE 0 END AS EN_PSF,
-CASE WHEN ITEM_GROUP = $P{MGroup} THEN INVE_BALANCE ELSE 0 END AS EN_PSM
+(SELECT INVE_DATE,SUM(CASE WHEN ITEM_GROUP = $P{FGroup} THEN INVE_BALANCE ELSE 0 END) AS EN_PSF,
+SUM(CASE WHEN ITEM_GROUP = $P{MGroup} THEN INVE_BALANCE ELSE 0 END) AS EN_PSM
 FROM FAR_DINVENBAL,FAR_MITEM
 WHERE INVE_FARM = $P{Farm}
 AND INVE_BREED IN ($P{Breed},$P{BreedAll})
@@ -147,39 +148,39 @@ ON a.TRAN_DATE = g.INVE_DATE
 WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2) BETWEEN $P{StartDate} AND $P{EndDate}]]>
 	</queryString>
 	<field name="TRAN_DATE" class="java.lang.Object"/>
-	<field name="AGE" class="java.lang.Object"/>
-	<field name="F_47" class="java.lang.Object"/>
+	<field name="AGE" class="java.lang.Integer"/>
+	<field name="F_47" class="java.lang.Integer"/>
 	<field name="HOUS_CODE" class="java.lang.Object"/>
 	<field name="HOUS_NAME" class="java.lang.Object"/>
 	<field name="M_LASTMO" class="java.lang.Object"/>
-	<field name="REC_DATE" class="java.lang.Object"/>
-	<field name="WK_DATE" class="java.lang.Object"/>
-	<field name="F_2" class="java.lang.Object"/>
-	<field name="SM_FEED" class="java.lang.Object"/>
-	<field name="SM_FM010" class="java.lang.Object"/>
-	<field name="SM_FM020" class="java.lang.Object"/>
-	<field name="SM_FM030" class="java.lang.Object"/>
-	<field name="SM_FM040" class="java.lang.Object"/>
-	<field name="SM_FM050" class="java.lang.Object"/>
-	<field name="SM_PCF2" class="java.lang.Object"/>
-	<field name="SM_PCF1" class="java.lang.Object"/>
-	<field name="SM_PCF" class="java.lang.Object"/>
-	<field name="SM_PCM" class="java.lang.Object"/>
-	<field name="SM_PDF" class="java.lang.Object"/>
-	<field name="SM_PDM" class="java.lang.Object"/>
-	<field name="SM_HC" class="java.lang.Object"/>
-	<field name="PC_HC" class="java.lang.Object"/>
+	<field name="REC_DATE" class="java.lang.Integer"/>
+	<field name="WK_DATE" class="java.lang.Integer"/>
+	<field name="F_2" class="java.math.BigDecimal"/>
+	<field name="SM_FEED" class="java.math.BigDecimal"/>
+	<field name="SM_FM010" class="java.math.BigDecimal"/>
+	<field name="SM_FM020" class="java.math.BigDecimal"/>
+	<field name="SM_FM030" class="java.math.BigDecimal"/>
+	<field name="SM_FM040" class="java.math.BigDecimal"/>
+	<field name="SM_FM050" class="java.math.BigDecimal"/>
+	<field name="SM_PCF2" class="java.lang.Integer"/>
+	<field name="SM_PCF1" class="java.lang.Integer"/>
+	<field name="SM_PCF" class="java.lang.Integer"/>
+	<field name="SM_PCM" class="java.lang.Integer"/>
+	<field name="SM_PDF" class="java.lang.Integer"/>
+	<field name="SM_PDM" class="java.lang.Integer"/>
+	<field name="SM_HC" class="java.lang.Integer"/>
+	<field name="PC_HC" class="java.lang.Integer"/>
 	<field name="F29" class="java.lang.Object"/>
-	<field name="SM_HCG" class="java.lang.Object"/>
-	<field name="PC_HCG" class="java.lang.Object"/>
-	<field name="SM_HCS" class="java.lang.Object"/>
-	<field name="PC_HCS" class="java.lang.Object"/>
-	<field name="SM_HCD" class="java.lang.Object"/>
-	<field name="PC_HCD" class="java.lang.Object"/>
-	<field name="SM_HCC" class="java.lang.Object"/>
-	<field name="PC_HCC" class="java.lang.Object"/>
-	<field name="H01" class="java.lang.Object"/>
-	<field name="H02" class="java.lang.Object"/>
+	<field name="SM_HCG" class="java.lang.Integer"/>
+	<field name="PC_HCG" class="java.math.BigDecimal"/>
+	<field name="SM_HCS" class="java.lang.Integer"/>
+	<field name="PC_HCS" class="java.math.BigDecimal"/>
+	<field name="SM_HCD" class="java.lang.Integer"/>
+	<field name="PC_HCD" class="java.math.BigDecimal"/>
+	<field name="SM_HCC" class="java.lang.Integer"/>
+	<field name="PC_HCC" class="java.math.BigDecimal"/>
+	<field name="H01" class="java.lang.Integer"/>
+	<field name="H02" class="java.lang.Integer"/>
 	<field name="F_5" class="java.lang.Object"/>
 	<field name="F_11" class="java.lang.Object"/>
 	<field name="F_7" class="java.lang.Object"/>
@@ -319,7 +320,7 @@ WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2
 				<text><![CDATA[BANGKOK RANCH PUBLIC CO.,LTD.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="268" y="22" width="273" height="22" forecolor="#990000" uuid="adc8e2ba-a132-4078-8eed-d660aade8a84"/>
+				<reportElement x="256" y="22" width="273" height="22" forecolor="#990000" uuid="adc8e2ba-a132-4078-8eed-d660aade8a84"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
 				</textElement>
@@ -419,6 +420,13 @@ WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EndDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="22" width="100" height="22" forecolor="#990000" uuid="a01b7ebf-aed0-4e72-9851-34ddf9feff36"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Breed}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -1180,7 +1188,7 @@ WHERE SUBSTR(a.TRAN_DATE,7) || SUBSTR(a.TRAN_DATE,4,2) || SUBSTR(a.TRAN_DATE,1,2
 				<textFieldExpression><![CDATA[$F{F_47}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="AltBackgrd" x="214" y="1" width="19" height="12" uuid="3d7a1d33-fc58-450b-ad01-ff5d057f270d"/>
+				<reportElement style="AltBackgrd" x="214" y="1" width="20" height="12" uuid="3d7a1d33-fc58-450b-ad01-ff5d057f270d"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="9"/>
 				</textElement>
