@@ -17,10 +17,10 @@ REM Change directory to the local repository
 cd %LOCAL_REPO_PATH%
 
 REM Run Git pull with username and token
-git pull --force https://%GITHUB_USERNAME%:%GITHUB_TOKEN%@%REPO_URL%
+git pull https://%GITHUB_USERNAME%:%GITHUB_TOKEN%@%REPO_URL%
 
 REM Optional: Display the result of the pull operation
-echo อัพเดทสำเร็จ
+echo Git pull completed
 
 REM Pause to keep the command window open (optional)
 pause
