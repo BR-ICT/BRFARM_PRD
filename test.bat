@@ -8,7 +8,7 @@ REM Set the repository URL
 set REPO_URL=github.com/BR-ICT/BRFARM_PRD.git develop
 
 REM Set the path to your local repository
-set LOCAL_REPO_PATH=D:\BRFARM
+set LOCAL_REPO_PATH=%~dp0
 
 REM Set the branch you want to pull
 set BRANCH_NAME=your_branch_name
